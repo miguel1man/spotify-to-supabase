@@ -27,8 +27,8 @@ Esta es la hoja de ruta recomendada. Cada fase principal debe ser abordada en or
 ### Fase 2: Autenticación y Conexión
 - [ ] **Tarea 2.1 (Validación)**: Usar `notebooks/02-authentication/spotify-oauth-test.ipynb` para completar y probar el flujo de autenticación OAuth2 con Spotify.
 - [ ] **Tarea 2.2 (Implementación)**: Implementar la lógica de autenticación en `src/adapters/spotify/auth.py` y los endpoints correspondientes en `src/presentation/api/v1/auth.py`.
-- [ ] **Tarea 2.3 (Validación)**: Usar `notebooks/02-authentication/supabase-connection-test.ipynb` para verificar la conexión con Supabase.
-- [ ] **Tarea 2.4 (Implementación)**: Crear el cliente de Supabase en `src/adapters/supabase/client.py`.
+- [x] **Tarea 2.3 (Validación)**: Usar `notebooks/04-supabase-crud/create-track.ipynb` para verificar la conexión y operaciones CRUD con Supabase.
+- [x] **Tarea 2.4 (Implementación)**: Crear el cliente de Supabase (`client.py`), un repositorio genérico (`repository.py`), los scripts de migración SQL y un servicio de prueba para la capa de persistencia.
 
 ### Fase 3: Lógica de Negocio Principal (Core)
 - [ ] **Tarea 3.1**: Definir las entidades de dominio en `src/core/entities/`.

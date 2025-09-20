@@ -45,19 +45,19 @@ project-root/
 │   │       └── repository.py   # Implementación genérica de repositorios para Supabase
 │   ├── core/
 │   │   ├── entities/
-│   │   │   ├── track.py, artist.py, album.py # Entidades de dominio
+│   │   │   └── track.py, artist.py, album.py # Entidades de dominio
 │   │   ├── repositories/
 │   │   │   ├── base_repository.py      # Interfaz base para CRUD
 │   │   │   ├── spotify_repository.py   # Interfaz para el repositorio de Spotify
 │   │   │   └── track_repository.py     # Interfaz para el repositorio de Tracks
 │   │   └── services/
 │   │       ├── sync_service.py         # Lógica de negocio para la sincronización
-│   │       └── track_service.py        # Lógica de negocio para la gestión de tracks
+│   │       └── supabase_test_service.py # Servicio para pruebas de Supabase
 │   ├── infrastructure/
 │   │   ├── config/
 │   │   │   └── settings.py     # Carga de configuración desde .env
 │   │   ├── database/
-│   │   │   └── migrations/     # Scripts SQL para la creación de tablas
+│   │   │   └── migrations/     # Scripts SQL para la creación de tablas (e.g., 01_create_artists.sql)
 │   │   └── security/
 │   │       └── oauth.py        # Utilidades de seguridad y OAuth
 │   └── presentation/
