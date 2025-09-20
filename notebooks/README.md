@@ -7,6 +7,7 @@ Este directorio contiene una colección de Jupyter Notebooks diseñados para pro
 El principio fundamental de estos notebooks es **reducir el riesgo y acelerar el desarrollo**. Interactuar con APIs externas o bases de datos puede ser propenso a errores (credenciales incorrectas, formatos de datos inesperados, problemas de red, etc.).
 
 Al usar un notebook, podemos:
+
 - Probar la conectividad y autenticación con servicios como Spotify y Supabase de forma interactiva.
 - Inspeccionar las respuestas de la API en tiempo real y entender su estructura.
 - Desarrollar y depurar la lógica de transformación de datos (por ejemplo, convertir una respuesta de la API de Spotify en una entidad de dominio Pydantic) en un entorno rápido y visual.
@@ -31,7 +32,6 @@ Para un desarrollo guiado, se recomienda ejecutar los notebooks en el siguiente 
 
 1.  `notebooks/01-setup/environment-test.ipynb`
 2.  `notebooks/02-authentication/supabase-connection-test.ipynb`
-3.  `notebooks/02-authentication/spotify-oauth-test.ipynb`
-4.  `notebooks/03-spotify-api/get-saved-tracks.ipynb`
-5.  `notebooks/04-supabase-crud/create-track.ipynb`
-6.  `notebooks/06-integration/end-to-end-sync.ipynb`
+3.  `notebooks/03-spotify-api/get-saved-tracks.ipynb`
+4.  `notebooks/04-supabase-crud/create-track.ipynb`
+5.  `notebooks/06-integration/end-to-end-sync.ipynb`

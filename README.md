@@ -1,23 +1,47 @@
-# Spotify to Supabase Tracker
+# Spotify to Supabase Sync
 
-Una aplicación FastAPI para extraer y sincronizar las canciones guardadas de Spotify con una base de datos Supabase.
+Este proyecto es una API construida con FastAPI que sincroniza las canciones guardadas de un usuario de Spotify con una base de datos de Supabase.
 
-## 🚀 Descripción General
+## 🚀 Quick Start
 
-Este proyecto permite a un usuario autenticarse a través de Spotify, extraer todas sus canciones guardadas ("Me Gusta") y sincronizarlas en una base de datos PostgreSQL gestionada por Supabase. La interacción se realiza a través de una API RESTful construida con FastAPI.
+1.  **Clonar el proyecto**:
 
-El repositorio está especialmente estructurado para ser desarrollado de forma iterativa por un Asistente de IA con acceso a un entorno de línea de comandos (CLI).
+    ```bash
+    git clone https://github.com/miguel1man/spotify-to-supabase.git
+    cd spotify-to-supabase
+    ```
 
-## 🗺️ Guía del Proyecto
+2.  **Instalar dependencias con `uv`**:
 
-Para entender completamente el proyecto, la arquitectura y la hoja de ruta de desarrollo, consulta los siguientes documentos:
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv sync
+    ```
 
-- **[🛠️ Configuración y Entorno](./docs/SETUP.md)**: Instrucciones detalladas sobre cómo configurar el entorno de desarrollo, gestionar dependencias e instalar las herramientas necesarias.
-- **[🏗️ Arquitectura del Proyecto](./docs/ARCHITECTURE.md)**: Una explicación en profundidad de la arquitectura hexagonal, la estructura de directorios y los patrones de diseño utilizados.
-- **[📝 Referencia de API y Datos](./docs/API_REFERENCE.md)**: Documentación sobre los modelos de datos (SQL), los esquemas Pydantic y los endpoints de la API.
-- **[🤖 Guía de Desarrollo con IA](./docs/LLM_DEVELOPMENT.md)**: La hoja de ruta principal para el desarrollo iterativo, incluyendo los hitos del proyecto y la metodología de validación.
+3.  **Configurar credenciales**:
+    Copia `.env.example` a `.env` y añade tus credenciales de Spotify y Supabase ([docs/SETUP.md](./docs/SETUP.md)).
 
-### Recursos Adicionales
+    ```bash
+    cp .env.example .env
+    ```
 
-- **[📓 Guía de Notebooks de Validación](./notebooks/README.md)**: Explica cómo usar los Jupyter Notebooks para probar y validar funcionalidades de forma aislada antes de su implementación final.
-- **[💬 Guía de Prompts](./prompts/README.md)**: Describe la estructura de los prompts diseñados para guiar al asistente de IA en cada fase del desarrollo.
+4.  **Activar entorno y ejecutar la API**:
+
+    ```bash
+    source .venv/bin/activate
+    uvicorn main:app --reload
+    ```
+
+5.  **Acceder a la documentación**: Abre tu navegador y ve a `http://127.0.0.1:8000/docs`.
+
+## 🏗️ Arquitectura
+
+El proyecto sigue una Arquitectura Hexagonal para una clara separación de responsabilidades. Para más detalles, consulta [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
+
+## 🛠️ Configuración Detallada
+
+Para una guía completa sobre la configuración del entorno, variables y dependencias, consulta [docs/SETUP.md](./docs/SETUP.md).
+
+## 📝 Referencia de la API
+
+La descripción de los endpoints, modelos de datos y esquemas de la base de datos se encuentra en [docs/API_REFERENCE.md](./docs/API_REFERENCE.md).
