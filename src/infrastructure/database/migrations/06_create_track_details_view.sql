@@ -1,4 +1,3 @@
--- 6. Vista de Detalles de Canciones
 -- Proporciona una vista legible que une canciones, artistas y álbumes.
 CREATE OR REPLACE VIEW public.track_details AS
 SELECT

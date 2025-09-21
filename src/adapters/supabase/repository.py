@@ -2,7 +2,7 @@ import logging
 from typing import Type, TypeVar, List, Optional, Generic
 from uuid import UUID
 from datetime import datetime
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel
 from supabase import Client
 
 from src.core.repositories.base_repository import BaseRepository
@@ -32,9 +32,18 @@ class SupabaseRepository(BaseRepository[EntityType], Generic[EntityType]):
             # Convert UUID to string to avoid JSON serialization issues
             if isinstance(value, UUID):
                 entity_dict[key] = str(value)
-            # Convert datetime to ISO string to avoid JSON serialization issues
+            # Convert datetime to ISO string with 1 decimal second to avoid JSON serialization issues
             if isinstance(value, datetime):
-                entity_dict[key] = value.isoformat()
+                formatted = value.isoformat()
+                if '.' in formatted:
+                    parts = formatted.split('.')
+                    if len(parts) > 1:
+                        micro_tz = parts[1].split('+')
+                        micro = micro_tz[0]
+                        tz = '+' + micro_tz[1] if len(micro_tz) > 1 else ''
+                        formatted = parts[0] + '.' + micro[0] + tz
+                logger.debug(f"Formatted timestamp for {key}: {formatted}")
+                entity_dict[key] = formatted
 
         # Special handling for SavedTrack
         if self.model.__name__ == 'SavedTrack':
@@ -45,6 +54,10 @@ class SupabaseRepository(BaseRepository[EntityType], Generic[EntityType]):
             if 'spotify_id' in entity_dict:
                 entity_dict['spotify_track_id'] = entity_dict.pop('spotify_id')
             # Ensure album_id is included if present
+        # Special handling for Album
+        elif self.model.__name__ == 'Album':
+            # Exclude nested objects not in table
+            entity_dict.pop('artists', None)
         return entity_dict
 
     def create(self, entity: EntityType) -> EntityType:
@@ -85,7 +98,25 @@ class SupabaseRepository(BaseRepository[EntityType], Generic[EntityType]):
             column_name = 'spotify_track_id' if self.table_name == 'spotify_tracks' else 'spotify_id'
             response = self.client.table(self.table_name).select("*").eq(column_name, spotify_id).execute()
             if response.data:
-                return self.model.model_validate(response.data[0])
+                # Special handling for SavedTrack due to nested objects not in table
+                if self.model.__name__ == 'SavedTrack':
+                    # Create SavedTrack manually since DB doesn't have artists/album
+                    data = response.data[0]
+                    from src.core.entities.track import SavedTrack
+                    return SavedTrack(
+                        id=UUID(data['id']) if data.get('id') else None,
+                        spotify_track_id=data['spotify_track_id'],
+                        track_name=data['track_name'],
+                        artists=[],  # Not stored in DB
+                        album=None,  # Not stored in DB
+                        album_id=UUID(data['album_id']) if data.get('album_id') else None,
+                        spotify_url=data['spotify_url'],
+                        added_at=datetime.fromisoformat(data['added_at']),
+                        created_at=datetime.fromisoformat(data['created_at']) if data.get('created_at') else None,
+                        updated_at=datetime.fromisoformat(data['updated_at']) if data.get('updated_at') else None,
+                    )
+                else:
+                    return self.model.model_validate(response.data[0])
             return None
         except Exception as e:
             logger.error(f"Error al obtener por Spotify ID '{spotify_id}' de '{self.table_name}': {e}")

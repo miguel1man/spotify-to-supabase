@@ -1,8 +1,9 @@
--- 5. Tabla de Unión: Album-Artists
 -- Maneja la relación muchos a muchos entre álbumes y artistas.
 CREATE TABLE public.spotify_album_artists (
     album_id UUID NOT NULL REFERENCES public.spotify_albums(id) ON DELETE CASCADE,
     artist_id UUID NOT NULL REFERENCES public.spotify_artists(id) ON DELETE CASCADE,
+    artist_name TEXT NOT NULL,
+    album_name TEXT NOT NULL,
     PRIMARY KEY (album_id, artist_id),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

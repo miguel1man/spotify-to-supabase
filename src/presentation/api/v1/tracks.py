@@ -66,11 +66,20 @@ async def sync_saved_tracks(
                 spotify_url=artist['external_urls']['spotify']
             ) for artist in track['artists']
         ]
+        album_artists_entity = [
+            Artist(
+                spotify_id=artist['id'],
+                name=artist['name'],
+                spotify_url=artist['external_urls']['spotify']
+            ) for artist in track['album'].get('artists', [])
+        ]
         album_entity = Album(
             spotify_id=track['album']['id'],
             name=track['album']['name'],
             release_date=track['album']['release_date'],
-            spotify_url=track['album']['external_urls']['spotify']
+            spotify_url=track['album']['external_urls']['spotify'],
+            album_type=track['album']['album_type'],
+            artists=album_artists_entity
         )
         saved_track_entity = SavedTrack(
             spotify_track_id=track['id'],

@@ -1,4 +1,3 @@
--- 3. Tabla de Canciones (Tracks)
 CREATE TABLE public.spotify_tracks (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     spotify_track_id VARCHAR(100) NOT NULL UNIQUE,

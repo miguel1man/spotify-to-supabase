@@ -21,6 +21,8 @@ class Album(BaseModel):
     name: str
     release_date: str
     spotify_url: HttpUrl
+    album_type: Optional[str] = None
+    artists: List[Artist] = []
 
     @field_serializer('spotify_url')
     def serialize_url(self, url: HttpUrl, _info):
@@ -32,7 +34,7 @@ class SavedTrack(BaseModel):
     spotify_track_id: str = Field(..., description="ID de la canción en Spotify")
     track_name: str
     artists: List[Artist]
-    album: Album
+    album: Optional[Album] = None
     album_id: Optional[UUID] = None
     spotify_url: HttpUrl
     added_at: datetime = Field(..., description="Fecha en que se guardó en Spotify")
