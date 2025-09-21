@@ -33,6 +33,7 @@ class SavedTrack(BaseModel):
     track_name: str
     artists: List[Artist]
     album: Album
+    album_id: Optional[UUID] = None
     spotify_url: HttpUrl
     added_at: datetime = Field(..., description="Fecha en que se guardó en Spotify")
     created_at: Optional[datetime] = None

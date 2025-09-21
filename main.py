@@ -4,9 +4,15 @@ import logging
 
 # Configuración básica de logging
 logging.basicConfig(
-    level=logging.DEBUG, # Cambiado a DEBUG para ver más detalles
+    level=logging.INFO,  # Cambiado a INFO para reducir ruido de DEBUG
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
+
+# Configurar loggers de bibliotecas externas para reducir ruido
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
+logging.getLogger("supabase").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 app = FastAPI(
     title="Spotify to Supabase Sync",
