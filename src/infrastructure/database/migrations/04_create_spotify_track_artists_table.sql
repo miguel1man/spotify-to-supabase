@@ -5,7 +5,8 @@ CREATE TABLE public.spotify_track_artists (
     artist_name TEXT NOT NULL,
     spotify_track_name TEXT NOT NULL,
     PRIMARY KEY (track_id, artist_id),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE INDEX idx_spotify_track_artists_track_id ON public.spotify_track_artists(track_id);

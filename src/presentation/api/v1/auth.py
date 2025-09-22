@@ -1,26 +1,33 @@
-from fastapi import APIRouter, Depends
-from fastapi.responses import RedirectResponse
+from fastapi import APIRouter
+from pydantic import BaseModel
 from src.adapters.spotify import auth
 import logging
 
 router = APIRouter()
 
-@router.get("/login", summary="Paso 1: Iniciar autenticación con Spotify")
+
+class LoginResponse(BaseModel):
+    auth_url: str
+
+
+@router.get(
+    "/login",
+    summary="Paso 1: Iniciar autenticación con Spotify",
+    response_model=LoginResponse,
+)
 def login():
     """
     **Este endpoint inicia el flujo de autenticación OAuth2 con Spotify.**
 
-    **¡Importante!** No ejecutes este endpoint desde la UI de Swagger con el botón "Try it out".
-    En su lugar, abre la siguiente URL directamente en una nueva pestaña de tu navegador:
-    
-    [http://127.0.0.1:8000/api/v1/auth/login](http://127.0.0.1:8000/api/v1/auth/login)
+    Genera la URL de autorización de Spotify a la que el usuario debe ser redirigido.
+    Desde la UI de Swagger, puedes ejecutar este endpoint y luego copiar la `auth_url` de la respuesta
+    y pegarla en una nueva pestaña de tu navegador para autorizar la aplicación.
 
-    Serás redirigido a la página de autorización de Spotify. Después de que apruebes los permisos,
-    Spotify te redirigirá de vuelta al endpoint `/callback` de esta API.
+    Después de que apruebes los permisos, Spotify te redirigirá de vuelta al endpoint `/callback` de esta API.
     """
     auth_url = auth.get_auth_url()
-    logging.info(f"Redirigiendo a la URL de autorización de Spotify: {auth_url}")
-    return RedirectResponse(auth_url)
+    logging.info(f"Generada URL de autorización de Spotify: {auth_url}")
+    return {"auth_url": auth_url}
 
 @router.get("/callback", summary="Paso 2: Callback automático de Spotify")
 def callback(code: str):
