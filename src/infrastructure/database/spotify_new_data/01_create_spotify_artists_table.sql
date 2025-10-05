@@ -2,7 +2,7 @@ CREATE TABLE public.spotify_artists (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     spotify_id VARCHAR(100) NOT NULL UNIQUE,
     name TEXT NOT NULL,
-    spotify_url VARCHAR(255),
+    spotify_url VARCHAR(255) NOT NULL UNIQUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
